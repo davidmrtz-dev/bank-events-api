@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2021_09_13_213142) do
 
   create_table "payment_sources", force: :cascade do |t|
     t.integer "type"
-    t.date "statement_date"
+    t.datetime "statement_date", precision: 6, null: false
     t.bigint "billing_information_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
