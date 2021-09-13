@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_13_213142) do
+ActiveRecord::Schema.define(version: 2021_09_13_233021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(version: 2021_09_13_213142) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_billing_informations_on_customer_id"
+  end
+
+  create_table "charges", force: :cascade do |t|
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.integer "status"
+    t.bigint "purchase_id", null: false
+    t.bigint "payment_source_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["payment_source_id"], name: "index_charges_on_payment_source_id"
+    t.index ["purchase_id"], name: "index_charges_on_purchase_id"
+    t.index ["status"], name: "index_charges_on_status"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -53,6 +65,8 @@ ActiveRecord::Schema.define(version: 2021_09_13_213142) do
   end
 
   add_foreign_key "billing_informations", "customers"
+  add_foreign_key "charges", "payment_sources"
+  add_foreign_key "charges", "purchases"
   add_foreign_key "payment_sources", "billing_informations"
   add_foreign_key "purchases", "customers"
 end
