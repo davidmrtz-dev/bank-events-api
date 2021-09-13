@@ -9,6 +9,6 @@ class CreatePurchases < ActiveRecord::Migration[6.1]
       t.timestamps
     end
     add_index :purchases, %i[name amount]
-    add_reference :purchases, :customer, foreign_key: true
+    add_reference :purchases, :customer, null: false, foreign_key: true
   end
 end
