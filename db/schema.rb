@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_13_211238) do
+ActiveRecord::Schema.define(version: 2021_09_13_213142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(version: 2021_09_13_211238) do
     t.index ["email"], name: "index_customers_on_email", unique: true
   end
 
+  create_table "payment_sources", force: :cascade do |t|
+    t.integer "type"
+    t.date "statement_date"
+    t.bigint "billing_information_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["billing_information_id"], name: "index_payment_sources_on_billing_information_id"
+    t.index ["type", "statement_date"], name: "index_payment_sources_on_type_and_statement_date"
+  end
+
   create_table "purchases", force: :cascade do |t|
     t.string "name"
     t.decimal "amount", precision: 10, scale: 2, null: false
@@ -43,5 +53,6 @@ ActiveRecord::Schema.define(version: 2021_09_13_211238) do
   end
 
   add_foreign_key "billing_informations", "customers"
+  add_foreign_key "payment_sources", "billing_informations"
   add_foreign_key "purchases", "customers"
 end
