@@ -5,4 +5,6 @@ RSpec.describe Charge, type: :model do
     it { should belong_to(:purchase) }
     it { should belong_to(:payment_source) }
   end
+
+  it { should define_enum_for(:status).with_values(%i[failed succeeded pending canceled]) }
 end

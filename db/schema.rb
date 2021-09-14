@@ -43,13 +43,13 @@ ActiveRecord::Schema.define(version: 2021_09_13_233021) do
   end
 
   create_table "payment_sources", force: :cascade do |t|
-    t.integer "type"
+    t.integer "source"
     t.datetime "statement_date", precision: 6, null: false
     t.bigint "billing_information_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["billing_information_id"], name: "index_payment_sources_on_billing_information_id"
-    t.index ["type", "statement_date"], name: "index_payment_sources_on_type_and_statement_date"
+    t.index ["source", "statement_date"], name: "index_payment_sources_on_source_and_statement_date"
   end
 
   create_table "purchases", force: :cascade do |t|
