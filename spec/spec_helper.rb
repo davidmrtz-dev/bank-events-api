@@ -1,3 +1,5 @@
+require 'sidekiq/testing'
+
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
@@ -6,6 +8,11 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
   config.shared_context_metadata_behavior = :apply_to_host_groups
+
+  # Prevents lingering jobs between specs
+  config.before(:each) do
+    Sidekiq::Worker.clear_all
+  end
 end
 
 RSpec::Matchers.define :be_like_json_of do |serializable_hash|
