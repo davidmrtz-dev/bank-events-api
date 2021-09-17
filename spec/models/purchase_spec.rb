@@ -4,6 +4,7 @@ RSpec.describe Purchase, type: :model do
   describe 'associations' do
     it { should belong_to(:customer) }
     it { should have_many(:charges) }
+    it { should have_many(:events) }
   end
 
   describe 'validations' do
