@@ -12,7 +12,7 @@ RSpec.describe Purchase, type: :model do
     [
       0,
       1000,
-      10000,
+      10_000,
       100_000,
       350_000
     ].each do |value|
