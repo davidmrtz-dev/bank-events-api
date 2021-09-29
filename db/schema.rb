@@ -44,14 +44,13 @@ ActiveRecord::Schema.define(version: 2021_09_17_014525) do
 
   create_table "events", force: :cascade do |t|
     t.string "api_version"
-    t.string "trigger", default: "", null: false
+    t.integer "trigger"
     t.string "eventable_type"
     t.bigint "eventable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["api_version", "trigger"], name: "index_events_on_api_version_and_trigger"
     t.index ["eventable_type", "eventable_id"], name: "index_events_on_eventable"
-    t.index ["trigger"], name: "index_events_on_trigger"
   end
 
   create_table "payment_sources", force: :cascade do |t|

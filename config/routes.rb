@@ -13,5 +13,5 @@ Rails.application.routes.draw do
       )
   end
 
-  mount Sidekiq::Web, at: "/sidekiq"
+  mount Sidekiq::Web, at: '/sidekiq'
 end
