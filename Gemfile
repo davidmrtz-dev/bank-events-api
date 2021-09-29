@@ -16,8 +16,12 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'database_cleaner-active_record'
   gem 'dotenv-rails'
+  gem 'guard'
+  gem 'guard-rspec', require: false
   gem 'pry-byebug'
   gem 'rspec-rails'
+  gem 'rubocop'
+  gem 'rubocop-rails'
   gem 'shoulda-matchers'
 end
 

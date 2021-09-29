@@ -2,6 +2,6 @@ class WorkNameWorker
   include Sidekiq::Worker
 
   def perform(*_args)
-    puts 'hello world worker'
+    Rails.logger.debug 'hello world worker'
   end
 end
