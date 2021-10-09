@@ -4,7 +4,6 @@ orbs:
 
 jobs:
   test_and_lints:
-    parallelism: 3
     docker:
       - image: circleci/ruby:2.7.3
         environment:
