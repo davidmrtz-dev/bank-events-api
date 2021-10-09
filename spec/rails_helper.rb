@@ -7,7 +7,9 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 
 require 'rspec/rails'
+require 'paper_trail/frameworks/rspec'
 require 'database_cleaner/active_record'
+require 'bullet'
 
 Dir[Rails.root.join('lib/*.rb')].sort.each { |file| require file }
 Dir[Rails.root.join('lib/*/*.rb')].sort.each { |file| require file }
@@ -21,7 +23,6 @@ end
 
 RSpec.configure do |config|
   Dir[File.join(__dir__, 'factories', '*.rb')].sort.each { |file| require file }
-  Dir[File.join(__dir__, 'support', '*.rb')].sort.each { |file| require file }
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = false
 
@@ -38,6 +39,21 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include ActionDispatch::TestProcess::FixtureFile, type: :request
+  config.include ActionView::Helpers::NumberHelper
+
+  if Bullet.enable?
+    config.before(:each) do
+      Bullet.start_request
+    end
+
+    config.after(:each) do
+      Bullet.perform_out_of_channel_notifications if Bullet.notification?
+      Bullet.end_request
+    end
+  end
 end
 
 Shoulda::Matchers.configure do |config|
